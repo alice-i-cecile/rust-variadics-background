@@ -8,7 +8,7 @@ Any accepted proposal:
 - **should** be able to meet all of the **important** features
 - it **would be nice** if they were able to meet all of the nice-to-have features
 
-Proposals that only implement variadic functions or only implement variadic generics are welcome:
+Proposals that only implement variadic functions, variadic tuples or variadic generics are welcome:
 we can always mix and match solutions.
 
 If you have additions to or small optional changes to an existing proposal, please [make a PR](https://github.com/alice-i-cecile/rust-variadics-background) amending it, rather than creating an entirely new proposal.
@@ -16,7 +16,7 @@ If you have additions to or small optional changes to an existing proposal, plea
 Like always, proposals should be:
 
 - clear
-- minimally invasive
+- minimally scoped
 - extensible
 - reversible
 

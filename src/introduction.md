@@ -5,7 +5,7 @@ And why do all of the crab-obsessed programmers in my life keep making longing a
 
 Let's start at the beginning.
 **Variadic** is just a fancy word for "can take a variable number of arguments".
-In the context of Rust, we are interested in both **variadic functions** (like a hypothetical `product(factor: ..i32)` function) or **variadic generics** (like a hypothetical `HeterogenouslyTypedList<T>(..T)`).
+In the context of Rust, we are interested in **variadic functions** (like a hypothetical `product(factor: ..i32)` function), **variadic tuples** (`trait Bundle: Tuple + Component)` and **variadic generics** (like a hypothetical `HeterogenouslyTypedList<T>(..T)`).
 
 Let's talk a little bit about how you might use each of those in practice.
 
@@ -70,6 +70,16 @@ assert_eq!(sum(1,2,3), 6);
 If this world was particularly utopian, we could automatically convert lists of arguments into an unnamed type that implements `IntoIterator`,
 and our ✨elegant✨ code from above would Just Work when users try to pass it multiple arguments of the same type.
 
+## Variadic tuples
+
+Tuples are great: simple, heterogenously typed collections of elements with a fixed length.
+But what if we wanted tuples of *arbitrary* length?
+
+Your first reaction might be "that's what vectors are for!".
+But in Rust, iterators must be **homogenously typed**: [we cannot have](https://beachape.com/blog/2016/10/23/rust-hlists-heterogenously-typed-list/) a vector that contains both `f32` and `i32`, even if all we want to do is print their values.
+
+TODO: add compelling simple example here.
+
 ## Variadic generics
 
 Variadic functions seem cool, but you remember that Rust really loves moving complex logic into the type system.
@@ -81,7 +91,7 @@ Here's an example of how this function might look if we only wanted to check if 
 ```rust
 use std::any::Any;
 
-fn are_you_my_type<T>(arg: &dyn Any) -> bool {
+fn are_you_my_type<T: Any>(arg: &dyn Any) -> bool {
    arg.is::<T>()
 }
 ```
@@ -91,7 +101,7 @@ Alright, that was easy! Let's see *two* types:
 ```rust
 use std::any::Any;
 
-fn are_you_my_type<T, U>(arg: &dyn Any) -> bool {
+fn are_you_my_type<T: Any, U: Any>(arg: &dyn Any) -> bool {
    arg.is::<T>() || arg.is::<U>()
 }
 ```
@@ -108,7 +118,7 @@ You are cunning though, and use default type arguments to get around this, and y
 ```rust
 use std::any::Any;
 
-fn are_you_my_type<T = (), U = (), V = ()>(arg: &dyn Any) -> bool {
+fn are_you_my_type<T: Any = (), U: Any = (), V: Any = ()>(arg: &dyn Any) -> bool {
    arg.is::<T>() || arg.is::<U>() || arg.is::<V>()
 }
 ```
@@ -124,7 +134,7 @@ Longing for the clean, obvious correctness of
 use std::any::Any;
 
 // ..Types in the type parameters means "any number of type arguments"
-fn are_you_my_type<..Types>(arg: &dyn Any) -> bool {
+fn are_you_my_type<..Types: Any>(arg: &dyn Any) -> bool {
     let matches = false;
     // In the utopian fantasy of variadics,
     // we can iterate over lists of type parameters
@@ -140,16 +150,16 @@ fn are_you_my_type<..Types>(arg: &dyn Any) -> bool {
 
 you join the other crabs, muttering furtively about "variadics" and "arity".
 
-## Why do we need to tackle variadic functions and variadic generics together?
+## Why do we need to tackle all of these things together?
 
 Both of these features are cool, but if they're complex to implement, why can't we design and implement them seperately?
 They're conceptually related, sure, but if we break up the work, can't we make this easier?
 
 Ultimately, there are three reasons for this:
 
-1. Syntax should be intuitively consistent betweeen variadic functions and variadic generics.
-2. Some implementation proposals couple their design.
-3. Some use cases (typically those involving heterogenous lists) require interplay between the two features.
+1. Syntax should be intuitively consistent betweeen variadic functions, variadic tuples and variadic generics.
+2. Variadic functions, variadic generics and varidic tuples may rely on each other under the hood, depending on the [implementation strategy](implementation-proposals/proposals.md).
+3. Many [features](features.md) rely on the interplay between variadic functions, tuples and generics to reach their full potential.
 
 ## Why don't we have variadics already?
 
@@ -170,7 +180,12 @@ For those of us firmly rooted in practical applications of programming, here's a
 
 - **Arity:** the number of arguments taken by a function.
   - The arity of `hello_world()` is zero, the arity of `add(a, b)` is two and the type-arity of `HashMap<i32, String>` is two.
+- **Existential type:** a type that cannot be named, but we know some details about
+  - `impl Add` is an existential type: we know that this type implements the `Add` trait, but nothing else about it
+  - for an excellent discussion of the details of existential types, go read [Existential Types in Rust](https://varkor.github.io/blog/2018/07/03/existential-types-in-rust.html)
 - **Function overloading:** the ability to use a single function name to mean several different (hopefully related) things based on which arguments it was passed.
+- **Homogeneously typed:** all of the items in a collection are the same type.
+  - The opposite of this is **hetergonenously typed**.
 - **Variadic:** something that can take a varying number of arguemnts.
   - In other words, the arity is not fixed.
 

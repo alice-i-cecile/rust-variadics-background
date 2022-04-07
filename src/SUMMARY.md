@@ -1,6 +1,6 @@
 # Summary
 
-- [Overview](overview.md)
+- [A gentle introduction to variadics](introduction.md)
 - [Syntax](syntax.md)
 - [Motivating use cases](use-cases/use-cases.md)
   - [Template](use-cases/template-use-case.md)

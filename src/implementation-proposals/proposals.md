@@ -12,5 +12,8 @@ Like always, proposals should be:
 
 - clear
 - minimally invasive
-- reversible
 - extensible
+- reversible
+
+Because variadics is [tentatively planned for the Rust 2024 edition](https://blog.rust-lang.org/inside-rust/2022/04/04/lang-roadmap-2024.html),
+[backwards-incompatible changes](https://doc.rust-lang.org/edition-guide/editions/index.html) can be part of implementation proposals if necessary.

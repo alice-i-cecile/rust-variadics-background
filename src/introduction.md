@@ -155,10 +155,13 @@ Ultimately, there are three reasons for this:
 
 If variadics are so cool, why doesn't Rust already have them?
 
-1. The [Language Team](https://www.rust-lang.org/governance/teams/lang) has been busy with other super cool and important features (but it's now tentatively listed on the [roadmap for Rust 2024](https://blog.rust-lang.org/inside-rust/2022/04/04/lang-roadmap-2024.html#looking-forward-1)).
-2. There are (terrible) workarounds for a lot of the critical [use cases](use-cases/use-cases.md).
-3. There are a lot of competing ideas for [how they could be implemented](implementation-proposals/proposals.md).
-4. The way variadics are [implemented in other languages](variadics-in-other-langs/language-comparisons.md) sometimes leaves something to be desired.
+1. The [Language Team](https://www.rust-lang.org/governance/teams/lang) has been busy with other super cool and important features.
+   1. But it's now tentatively listed on the [roadmap for Rust 2024](https://blog.rust-lang.org/inside-rust/2022/04/04/lang-roadmap-2024.html#looking-forward-1)).
+2. It is not clear which [features](features.md) are essential for variadics in practice.
+3. We had not reached consensus on the ideal [syntax](syntax.md) for variadics.
+4. There are (terrible) workarounds for a lot of the critical [use cases](use-cases/use-cases.md).
+5. There are a lot of competing ideas for [how they could be implemented](implementation-proposals/proposals.md).
+6. The way variadics are [implemented in other languages](variadics-in-other-langs/language-comparisons.md) sometimes leaves something to be desired.
 
 ## Glossary
 
@@ -173,7 +176,8 @@ For those of us firmly rooted in practical applications of programming, here's a
 
 ## Contributing
 
-This little book is hosted on GitHub at [alice-i-cecile/rust-variadics-background](https://github.com/alice-i-cecile/rust-variadics-background).
+Are you a crab muttering about variadics? Come help!
+This little book is hosted on GitHub at [`alice-i-cecile/rust-variadics-background`](https://github.com/alice-i-cecile/rust-variadics-background).
 
 Whether you're confused by an explanation, would like to explain at length why I'm wrong, have a wild new idea for how we could make variadics a reality, or simply want to fix a typo, please come contribute!
 

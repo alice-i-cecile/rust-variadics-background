@@ -41,12 +41,8 @@ How does this relate to other use cases?
 
 ## Workarounds
 
-How do they currently work around the lack of this feature?
+In real code bases that exist today, how do users currently work around the lack of this feature?
 
-## Concrete applications
-
-In real code bases that exist today, where would this feature be used?
-
-## Benefits
+Compare snippets of code before and after.
 
 Why would this feature make things better?

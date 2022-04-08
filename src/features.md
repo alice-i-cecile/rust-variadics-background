@@ -18,9 +18,10 @@ There are four levels of importance:
   - all of the arguments have the same type
   - only one variadic argument
   - the variadic argument comes last
-- I: **Variadic function arguments implement `IntoIterator`**
+- I: **Homogenous variadic function arguments implement `IntoIterator`**
   - allows use of `sum(1, 2, 3)` when the signature is `fn sum(impl IntoIterator<Item = impl Add>)`
   - important to ensure APIs are flexible and elegant
+  - this should also be done for homogenous tuples
 - I: **Heterogenous variadic functions**
   - `fn type_ids(args: ..impl Any)`
   - the type of each argument in the variadic list of function arguments can differ
@@ -57,6 +58,10 @@ There are four levels of importance:
   - Provide more interesting manipulations of tuples
   - These would be automatically implemented methods on the `Tuple` trait and typically return `impl Tuple`
   - See [`frunk`'s methods on `HCons`](https://docs.rs/frunk/latest/frunk/hlist/struct.HCons.html) for more ideas
+- C: **Heterogenous `IntoIterator` and `Iterator` traits**
+  - allows use of `pretty_print("A", 2, 4)` when the signature is `fn pretty_print(impl IntoIterator<Item impl Add>)`
+  - further increases API flexibility and ergonomics
+  - would be a significant change to core traits
 
 ## Variadic generics
 

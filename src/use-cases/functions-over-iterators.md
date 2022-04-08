@@ -65,7 +65,10 @@ For example:
 
 ```rust
 impl InputMap {
-    fn insert_chord(iter: impl IntoIterator<Item=impl Into<UserInput>>) {}
+    fn insert_chord(&mut self, input_iter: impl IntoIterator<Item=impl Into<UserInput>>, action: Action) {
+        let chord: Vec<UserInput> = input_iter.into_iter().collect();
+        self.map.insert(action, chord);
+    }
 }
 
 let input_map = InputMap::default();
@@ -78,11 +81,11 @@ let heterogenous_list: [Box<dyn Into<UserInput>>; 2] = [Box::new(KeyCode::LCtrl)
 input_map.insert_chord(heterogenous_list);
 ```
 
-If we had full variadic functions:
+If we had full variadic functions (including a **hetergonenous `IntoIterator` trait**):
 
 ```rust
 impl InputMap {
-    fn insert_chord(iter: impl IntoIterator<Item=impl Into<UserInput>>) {}
+    fn insert_chord(&mut self, input_iter: impl IntoIterator<Item=impl Into<UserInput>>, action: Action) {}
 }
 
 let input_map = InputMap::default();
@@ -131,65 +134,6 @@ impl <T> Vec<T>{
 
 This code was inspired by the [`Query::get_many_mut`](https://github.com/bevyengine/bevy/blob/b33dae31ec16915989496728b16160974bcc0fc7/crates/bevy_ecs/src/system/query.rs#L736) API in Bevy.
 
-### `all_tuples!` macros
+### `all_tuples!` macro
 
-With the ~mildly cursed~ power of macros, we can emulate variadic tuples today!
-Suppose we're trying to implement a simple `sum` function, but want to use an API that looks like variadic tuples for the Aesthetic.
-
-```rust
-fn sum<T: Add, I: Summable<T>>(addends: I) -> T{
-    addends.into_iter().reduce(|(a, b)|{a + b})
-}
-
-trait Summable {
-    type T: Add;
-
-    fn into_iter(self) -> impl Iterator<Item=T>
-}
-
-struct SumIter<T: Add> {
-    storage: Vec<T>,
-    index: usize,
-}
-
-impl Iterator for SumIter {
-   // You know how iterator adaptor structs work
-}
-
-assert_eq!(sum((1,2,3,4)), 10);
-```
-
-We can make this magic work by implenenting the `Summable` trait for tuple types:
-
-```rust
-// We can't just implement `IntoIterator` for `(T, T)` because of orphan rules
-impl <T: Add> Summable for (T, T) {
-    fn into_iter(self) -> SumIter<T> {
-        SumIter{
-            storage: vec![self.0, self.1],
-            index: 0,
-        }
-    }
-}
-```
-
-Use a macro to implement this for some large range of tuple sizes, and voila: knock-off homogenous variadic tuples!
-This has some drawbacks though:
-
-- we cannot implement the `IntoIterator` trait directly, because of orphan rules
-- there is a *lot* of added complexity and boilerplate
-- confusing [doc spam](https://docs.rs/bevy/0.6/bevy/ecs/bundle/trait.Bundle.html#impl-Bundle-for-(C0%2C%20C1))
-- [terrible error messages](https://github.com/bevyengine/bevy/issues/1519)
-- painful increases to compile times and executable sizes
-- we can only implement this trait up to a fixed N
-
-Of course, this is the easy case: we can actually take this approach and mimic trait-bound heterogenous variadic tuples!
-
-```rust
-// By splitting the generics apart, we can get heterogenous types
-impl <T: Display, U: Display> PrettyPrintable for (T, U) {}
-```
-
-In practice, this requires a macro-generating macro and some *creative* use of the type system, but, as shown by [bevy's `all_tuples!` macro](https://github.com/bevyengine/bevy/blob/032b0f4bac9d9d7ea9820b774d4a9124ae46e33b/crates/bevy_ecs/macros/src/lib.rs#L49) it can be done.
-
-Unsurprisingly, all of the problems listed above are amplified when working with heterogenous fake-variadics.
+See the [corresponding section](heterogenous-lists.md#alltuples-macro) in the [Heterogenous lists](heterogenous-lists.md) use case.

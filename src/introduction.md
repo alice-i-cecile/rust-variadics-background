@@ -78,7 +78,10 @@ But what if we wanted tuples of *arbitrary* length?
 Your first reaction might be "that's what vectors are for!".
 But in Rust, iterators must be **homogenously typed**: [we cannot have](https://beachape.com/blog/2016/10/23/rust-hlists-heterogenously-typed-list/) a vector that contains both `f32` and `i32`, even if all we want to do is print their values.
 
-TODO: add compelling simple example here.
+To get around this, we might choose to use a `Vec<Box dyn Trait>` type, allowing us to store a **hetergonenously typed** collection of [trait objects](https://doc.rust-lang.org/book/ch17-02-trait-objects.html).
+But this indirection has a not-insignificant performance cost, forcing us to store our data on the heap, and requiring additional indirection.
+
+**Variadic tuples** are an attempt to have our cake and eat it too: allowing us to store heterogenous collections of arbitrary length, even if they're not [object-safe](https://rust-lang.github.io/rfcs/0255-object-safety.html), creating a [zero-cost abstraction](https://doc.rust-lang.org/beta/embedded-book/static-guarantees/zero-cost-abstractions.html).
 
 ## Variadic generics
 
@@ -183,10 +186,12 @@ For those of us firmly rooted in practical applications of programming, here's a
 - **Existential type:** a type that cannot be named, but we know some details about
   - `impl Add` is an existential type: we know that this type implements the `Add` trait, but nothing else about it
   - for an excellent discussion of the details of existential types, go read [Existential Types in Rust](https://varkor.github.io/blog/2018/07/03/existential-types-in-rust.html)
+  - currently, there are two types of existential types: **return-position impl Trait** and **argument position impl Trait**, as described in the blog post linked above. These have subtly different semantics, but the distinction is unimportant here.
 - **Function overloading:** the ability to use a single function name to mean several different (hopefully related) things based on which arguments it was passed.
 - **Homogeneously typed:** all of the items in a collection are the same type.
   - The opposite of this is **hetergonenously typed**.
-- **Variadic:** something that can take a varying number of arguemnts.
+  - Subtly, homogenously typed collections are generally considered to be a special case of heterogenously typed collections: there's no requirement that the types *must* be different, only that the *can* be.
+- **Variadic:** something that can take a varying number of arguments.
   - In other words, the arity is not fixed.
 
 ## Contributing

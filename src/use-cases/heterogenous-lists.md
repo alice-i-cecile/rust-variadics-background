@@ -31,11 +31,13 @@ for item in hlist {
 - [ ] E: Homogenous variadic functions
 - [ ] I: Variadic function arguments implement `IntoIterator`
 - [ ] I: Heterogenous variadic functions
+- [ ] C: Flexible variadic function argument position
 
 ### Variadic generics
 
 - [ ] E: Unbounded variadic generics
 - [ ] E: Variadic generic trait bounds
+- [ ] C: Flexible variadic generic argument position
 
 ## Detailed explanation
 

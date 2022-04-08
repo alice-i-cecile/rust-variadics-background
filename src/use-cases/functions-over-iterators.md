@@ -36,11 +36,13 @@ assert_eq!(sum(1..=3), 6);
 - [x] E: Homogenous variadic functions
 - [x] I: Variadic function arguments implement `IntoIterator`
 - [x] I: Heterogenous variadic functions
+- [ ] C: Flexible variadic function argument position
 
 ### Variadic generics
 
 - [ ] E: Unbounded variadic generics
 - [ ] E: Variadic generic trait bounds
+- [ ] C: Flexible variadic generic argument position
 
 ## Detailed explanation
 

@@ -82,6 +82,16 @@ There are four levels of importance:
   - the type of each argument in the variadic list of function arguments can differ
   - requires variadic generics, as we must store the list of types
   - completely useless without variadic generic trait bounds: we can't even use methods from `Any` due to its trait bounds
+- C: **Flexible variadic function argument position**
+  - `fn compound_homogenous_variadic_function(strings: ..String, ints: ..i32, flag: bool)`
+    - at compile time, we must be able to show that adjacent variadic function arguments are distinct
+  - `fn compound_generic_variadic_function<A, B>(a: ..A, b: ..B)`
+    - `A` can never be the same type as `B`
+  - `fn compound_heterogenous_variadic_function<?S: Sized, ?U: !Sized>(flag: bool, sized_args: ?T, unsized_args: ?U)`
+    - each provided argument must fit exactly one of the adjacent variadic generic types
+    - requires flexible variadic generic argument positions
+  - variadic function arguments can live in any position, improving ergonomics and expressivity
+  - enables the use of more than one variadic function argument per function
 
 ## Variadic generics
 
@@ -95,6 +105,17 @@ There are four levels of importance:
   - `fn add_bundle<..T: Component>(component: T)`
   - each type in the variadic generic list must implement the supplied trait(s)
   - critical for more almost all use cases of variadic generics: you can't even use methods from `Any` without trait bounds
+- C: **Flexible variadic generic argument position**
+  - `struct Query<?Q: WorldQuery, ?F: WorldQuery + FilterFetch>`
+    - any type provided must be able to be seperated into exactly one of the adjacent variadic generics
+  - unbounded adjacent variadic generics are impossible
+    - consider `type AmbiguousTupleUnion<?A, ?B>`
+    - for any provided element, we have no way of knowing whether it belongs to `A` or `B`
+  - variadic generics can live in any position, improving ergonomics and expressivity
+  - enables the use of more than one variadic generic per type
+  - adjacent variadics must have a guarantee that the types cannot co-exist
+  - this feature becomes much more usable and useful with [negative impls](https://github.com/rust-lang/negative-impls-initiative)
+  - may need [negative trait bounds](https://github.com/rust-lang/rust/issues/42721) to be useful enough: `struct Query<?Q: WorldQuery + !FilterFetch, ?F: WorldQuery + FilterFetch>`
 
 ## Impossible features
 
@@ -102,5 +123,6 @@ These features may seem appealing, but are fundamentally impossible within Rust.
 
 - C: **Heterogenous `IntoIterator` and `Iterator` traits**
   - allows use of `pretty_print("A", 2, 4)` when the signature is `fn pretty_print(impl IntoIterator<Item impl Add>)`
-  - further increases API flexibility and ergonomics
+  - would further increase API flexibility, with minimal changes to existing code bases
   - impossible because existing APIs rely on the fact that the item type is always the same
+  - just create heterogenous iterator traits instead

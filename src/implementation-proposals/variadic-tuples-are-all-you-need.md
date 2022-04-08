@@ -22,11 +22,13 @@ With sufficiently powerful variadic tuples, we can reduce both variadic function
 - [x] E: Homogenous variadic functions
 - [ ] I: Variadic function arguments implement `IntoIterator`
 - [x] I: Heterogenous variadic functions
+- [ ] C: Flexible variadic function argument position
 
 ### Variadic generics
 
 - [x] E: Unbounded variadic generics
 - [x] E: Variadic generic trait bounds
+- [ ] C: Flexible variadic generic argument position
   
 ## Detailed explanation
 

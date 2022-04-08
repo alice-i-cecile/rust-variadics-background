@@ -4,12 +4,6 @@ Give a basic summary of the features covered by the language.
 
 ## Features covered
 
-### Variadic functions
-
-- [ ] E: Homogenous variadic functions
-- [ ] I: Variadic function arguments implement `IntoIterator`
-- [ ] I: Heterogenous variadic functions
-
 ### Variadic tuples
 
 - [ ] E: Tuple trait
@@ -23,7 +17,15 @@ Give a basic summary of the features covered by the language.
 - [ ] U: `HomogenousTuple` and `UniqueTuple` traits
 - [ ] C: Tuple type iteration
 
+### Variadic functions
+
+- [ ] E: Homogenous variadic functions
+- [ ] I: Variadic function arguments implement `IntoIterator`
+- [ ] I: Heterogenous variadic functions
+- [ ] C: Flexible variadic function argument position
+
 ### Variadic generics
 
 - [ ] E: Unbounded variadic generics
 - [ ] E: Variadic generic trait bounds
+- [ ] C: Flexible variadic generic argument position

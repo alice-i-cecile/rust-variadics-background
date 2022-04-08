@@ -35,14 +35,16 @@ assert!(example.is_concise());
 
 What do users want to do?
 
-Are there any limitations they would be willing to accept that may make implementation simpler?
-
-How does this relate to other use cases?
+Are there any particularly challenging edge cases?
+Would users be willing to accept limitations that may make implementation simpler?
+How does this use case require the specific features outlined above?
 
 ## Workarounds
 
+Each workaround should have its own subsection.
 In real code bases that exist today, how do users currently work around the lack of this feature?
 
 Compare snippets of code before and after.
-
 Why would this feature make things better?
+
+If you can find them, link to real-world uses of these workarounds.

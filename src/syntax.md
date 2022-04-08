@@ -8,7 +8,7 @@ Bikeshed here!
 
 ## Variadic generics and functions
 
-### Homogenous variadic function arguments
+### Homogenous variadic arguments
 
 `..T` syntax:
 

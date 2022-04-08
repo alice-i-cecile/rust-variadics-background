@@ -15,27 +15,27 @@ for item in hlist {
 
 Variadic tuples:
 
-- [x] E: Tuple trait
-- [ ] E: Homogenous variadic tuples
-- [x] E: Heterogenous variadic tuples
-- [x] E: Tuple item trait bounds
-- [x] E: Tuple value iteration
-- [x] I: Tuple type manipulation
-- [x] U: Variadic tuple destructuring
+- [x] Heterogenous variadic tuples
+- [x] Tuple item trait bounds
+- [x] Tuple value iteration
+- [x] Tuple trait
+- [x] Tuple type manipulation
+- [ ] Homogenous variadic tuples
+- [x] Variadic tuple destructuring
   
 Variadic functions:
 
-- [ ] E: Homogenous variadic functions
-- [ ] E: Heterogenous variadic functions
-- [ ] U: Argument packing and unpacking
-- [ ] C: Homogenous variadic function arguments implement `IntoIterator`
-- [ ] C: Flexible variadic function argument position
+- [ ] Homogenous variadic functions
+- [ ] Heterogenous variadic functions
+- [ ] Argument packing and unpacking
+- [ ] Homogenous variadic arguments implement `IntoIterator`
+- [ ] Flexible variadic argument position
 
 Variadic generics:
 
-- [ ] E: Minimum variadic generics
-- [ ] C: Flexible variadic generic argument position
-- [ ] C: Variadic generic type iteration
+- [ ] Minimum variadic generics
+- [ ] Variadic generic type iteration
+- [ ] Flexible variadic generic position
 
 ## Detailed explanation
 

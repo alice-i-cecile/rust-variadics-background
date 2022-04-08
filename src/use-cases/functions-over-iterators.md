@@ -33,13 +33,13 @@ Variadic functions:
 - [x] E: Homogenous variadic functions
 - [x] E: Heterogenous variadic functions
 - [ ] U: Argument packing and unpacking
-- [x] C: Homogenous variadic function arguments implement `IntoIterator`
-- [ ] C: Flexible variadic function argument position
+- [x] C: Homogenous variadic arguments implement `IntoIterator`
+- [ ] C: Flexible variadic argument position
 
 Variadic generics:
 
 - [ ] E: Minimum variadic generics
-- [ ] C: Flexible variadic generic argument position
+- [ ] C: Flexible variadic generic position
 - [ ] C: Variadic generic type iteration
 
 ## Detailed explanation

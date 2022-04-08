@@ -6,27 +6,27 @@ With sufficiently powerful variadic tuples, we can reduce both variadic function
 
 Variadic tuples:
 
-- [ ] E: Tuple trait
-- [ ] E: Homogenous variadic tuples
-- [ ] E: Heterogenous variadic tuples
-- [ ] E: Tuple item trait bounds
-- [ ] E: Tuple value iteration
-- [ ] I: Tuple type manipulation
-- [ ] U: Variadic tuple destructuring
-
+- [ ] Heterogenous variadic tuples
+- [ ] Tuple item trait bounds
+- [ ] Tuple value iteration
+- [ ] Tuple trait
+- [ ] Tuple type manipulation
+- [ ] Homogenous variadic tuples
+- [ ] Variadic tuple destructuring
+  
 Variadic functions:
 
-- [x] E: Homogenous variadic functions
-- [x] E: Heterogenous variadic functions
-- [ ] U: Argument packing and unpacking
-- [ ] C: Homogenous variadic function arguments implement `IntoIterator`
-- [ ] C: Flexible variadic function argument position
+- [x] Homogenous variadic functions
+- [x] Heterogenous variadic functions
+- [ ] Argument packing and unpacking
+- [ ] Homogenous variadic arguments implement `IntoIterator`
+- [ ] Flexible variadic argument position
 
 Variadic generics:
 
-- [x] E: Minimum variadic generics
-- [ ] C: Flexible variadic generic argument position
-- [ ] C: Variadic generic type iteration
+- [x] Minimum variadic generics
+- [ ] Variadic generic type iteration
+- [ ] Flexible variadic generic position
   
 ## Detailed explanation
 

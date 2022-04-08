@@ -4,71 +4,45 @@ Based on the [use cases](use-cases/use-cases.md) examined, how can we split out 
 
 At this stage, features are assessed on the basis of their utility:
 
-- **Essential \[E\]:** The *bare* minimum feature set for someone to truthfully say "Rust has variadic X now!".
-- **Important: \[I\]** Features that will actively frustrate users of variadics if they're missing.
-- **Useful \[U\]:** Features that everyone can agree would be nice to have, but that users can live without for now.
-- **Controversial \[C\]:** Features that could be cool, but may come with serious unavoidable drawbacks, encourage questionable patterns or be only tangentially related.
+- **Essential \[E\]:** The *bare* minimum feature set for someone to truthfully say "Rust has variadics now!".
+- **Important: \[I\]** Features that enable fundamentally new and valuable uses of variadics.
+- **Useful \[U\]:** Features that may make using variadics easier, but don't unlock fundamentally new functionality.
+- **Questionable \[Q\]:** Features that may improve usability in some ways, but degrade it in others.
 
 Note that this is independent of the difficulty of actually implementing such a feature.
+This feature list is designed to be compared across languages, and so features that may be literally impossible in Rust may be included.
+
 Difficulty, utility and path-dependent effects (e.g. feature A can be implemented in terms of feature B) should be combined later, when deciding how to proceed.
 
-## Abbreviated feature list
+## Feature list summary
 
 This feature list is used throughout this document, to enable consistent comparisons and at-a-glance understanding.
 
 Variadic tuples:
 
-- E: Tuple trait
-- E: Homogenous variadic tuples
 - E: Heterogenous variadic tuples
 - E: Tuple item trait bounds
 - E: Tuple value iteration
+- I: Tuple trait
 - I: Tuple type manipulation
+- U: Homogenous variadic tuples
 - U: Variadic tuple destructuring
   
 Variadic functions:
 
-- E: Homogenous variadic functions
-- E: Heterogenous variadic functions
+- U: Homogenous variadic functions
+- U: Heterogenous variadic functions
 - U: Argument packing and unpacking
-- C: Homogenous variadic function arguments implement `IntoIterator`
-- C: Flexible variadic function argument position
+- Q: Homogenous variadic arguments implement `IntoIterator`
+- Q: Flexible variadic argument position
 
 Variadic generics:
 
-- E: Minimum variadic generics
-- C: Flexible variadic generic argument position
-- C: Variadic generic type iteration
+- U: Minimum variadic generics
+- U: Variadic generic type iteration
+- Q: Flexible variadic generic position
 
 ## Variadic tuples
-
-### Tuple trait
-
-**Utility:** Essential
-
-**Minimal example:** `trait HList: Tuple`
-
-A `Tuple` trait is implemented by all tuples.
-
-This allows us to represent tuples of arbitrary length existentially.
-Useful methods can be added to it later, see [tuple value iteration](features.md#tuple-value-iteration) and [tuple type manipulation](features.md#tuple-type-manipulation).
-
-The [`frunk` crate's methods on `HCons`](https://docs.rs/frunk/latest/frunk/hlist/struct.HCons.html) contain a nice collection of methods that may be nice to implement.
-
-### Homogenous variadic tuples
-
-**Utility:** Essential
-
-**Minimal example:** `(..i32)`
-
-Tuples of arbitrary length can be represented, but only if they store the same type.
-The last element of any tuple can be homogenous variadic: `(bool, bool, ..String)`.
-
-A `HomogenousTuple` subtrait of `Tuple` can be defined if we have a [tuple trait](features.md#tuple-trait).
-This trait would enable:
-
-- infallible conversions to and from arrays
-- blanket impls of `IntoIterator` and `FromIterator`
 
 ### Heterogenous variadic tuples
 
@@ -107,10 +81,25 @@ This is essential to non-trivial use cases of variadic tuples.
 
 The values of arbitrary tuple types can be iterated over.
 
+Almost certainly requires a [tuple trait](features.md#tuple-trait).
+
 This is trivial for tuples that are guaranteed to be homogenous, but requires new technology for heterogenous tuples.
 If we have a [tuple item trait bound](features.md#tuple-item-trait-bounds), we can treat the item type as a `dyn Trait`.
 For concrete tuples (e.g. `(3, 3.14, "pi")`), we could attempt to infer whether or not tuple item trait bounds are valid
 based on which trait methods are used.
+
+### Tuple trait
+
+**Utility:** Important
+
+**Minimal example:** `trait HList: Tuple`
+
+A `Tuple` trait is implemented by all tuples.
+
+This allows us to represent tuples of arbitrary length existentially.
+Useful methods can be added to it later, see [tuple value iteration](features.md#tuple-value-iteration) and [tuple type manipulation](features.md#tuple-type-manipulation).
+
+The [`frunk` crate's methods on `HCons`](https://docs.rs/frunk/latest/frunk/hlist/struct.HCons.html) contain a nice collection of methods that may be nice to implement.
 
 ### Tuple type manipulation
 
@@ -128,6 +117,21 @@ The critical operations are:
 
 This was explored in [RFC Draft #376](https://github.com/rust-lang/rfcs/issues/376), which proposed using it as a building block for an implementation.
 
+### Homogenous variadic tuples
+
+**Utility:** Useful
+
+**Minimal example:** `(..i32)`
+
+Tuples of arbitrary length can be represented, but only if they store the same type.
+The last element of any tuple can be homogenous variadic: `(bool, bool, ..String)`.
+
+A `HomogenousTuple` subtrait of `Tuple` can be defined if we have a [tuple trait](features.md#tuple-trait).
+This trait would enable:
+
+- infallible conversions to and from arrays
+- blanket impls of `IntoIterator` and `FromIterator`
+
 ### Variadic tuple destructuring
 
 **Utility:** Useful
@@ -144,7 +148,7 @@ This was explored in [RFC Draft #376](https://github.com/rust-lang/rfcs/issues/3
 
 ### Homogenous variadic functions
 
-**Utility:** Essential
+**Utility:** Useful
 
 **Minimal example:** `fn sum(items: ..i32) -> i32`
 
@@ -155,7 +159,7 @@ It can be emulated with variadic tuples (e.g. `fn sum(items: (..i32)`), but this
 
 ### Heterogenous variadic functions
 
-**Utility:** Essential
+**Utility:** Useful
 
 **Minimal example:** `fn type_ids<?T: Any>(args: ..?T) -> Vec<TypeId>`
 
@@ -195,9 +199,9 @@ Related to [variadic tuple destructuring](features.md#variadic-tuple-destructuri
 
 Becomes more useful with [tuple type manipulation](features.md#tuple-type-manipulation), as it allows you to add and remove variadic arguments.
 
-### Homogenous variadic function arguments implement `IntoIterator`
+### Homogenous variadic arguments implement `IntoIterator`
 
-**Utility:** Controversial
+**Utility:** Questionable
 
 **Minimal example:**
 
@@ -221,9 +225,9 @@ Note that with variadic tuples and [tuple value iteration](features.md#tuple-val
 
 This feature would be more useful (and more confusing!) with [flexible variadic function argument positions](features.md#flexible-variadic-function-argument-position), as we could have several iterator function argument types.
 
-### Flexible variadic function argument position
+### Flexible variadic argument position
 
-**Utility:** Controversial
+**Utility:** Questionable
 
 **Minimal example:** `fn compound_homogenous_variadic_function(strings: ..String, ints: ..i32, flag: bool)`
 
@@ -254,9 +258,9 @@ struct PrettyPrintable<?T: Display>((..?T));
 
 The variadic argument must come last, unless [flexible variadic generic argument position](features.md#c-flexible-variadic-generic-argument-position) is implemented.
 
-### Flexible variadic generic argument position
+### Flexible variadic generic position
 
-**Utility:** Controversial
+**Utility:** Questionable
 
 **Minimal example:**
 
@@ -271,7 +275,7 @@ Allow variadic generic type parameters in positions other than the last position
 
 ### Variadic generic type iteration
 
-**Utility:** Controversial
+**Utility:** Questionable
 
 **Minimal example:**
 

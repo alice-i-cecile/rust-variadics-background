@@ -174,7 +174,6 @@ If variadics are so cool, why doesn't Rust already have them?
 3. We had not reached consensus on the ideal [syntax](syntax.md) for variadics.
 4. There are (terrible) workarounds for a lot of the critical [use cases](use-cases/use-cases.md).
 5. There are competing ideas for [how they could be implemented](implementation-proposals/proposals.md).
-   1. 
 6. The way variadics are [implemented in other languages](variadics-in-other-langs/language-comparisons.md) sometimes leaves something to be desired.
 
 ## Glossary

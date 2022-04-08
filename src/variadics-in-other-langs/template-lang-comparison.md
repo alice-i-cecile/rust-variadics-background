@@ -20,7 +20,7 @@ Give a basic summary of the features covered by the language.
 ### Variadic functions
 
 - [ ] E: Homogenous variadic functions
-- [ ] I: Variadic function arguments implement `IntoIterator`
+- [ ] I: Homogenous variadic function arguments implement `IntoIterator`
 - [ ] I: Heterogenous variadic functions
 - [ ] C: Flexible variadic function argument position
 

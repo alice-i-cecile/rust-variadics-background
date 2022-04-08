@@ -20,7 +20,7 @@ In a single sentence, what does this proposal allow and how does it do so?
 ### Variadic functions
 
 - [ ] E: Homogenous variadic functions
-- [ ] I: Variadic function arguments implement `IntoIterator`
+- [ ] I: Homogenous variadic function arguments implement `IntoIterator`
 - [ ] I: Heterogenous variadic functions
 - [ ] C: Flexible variadic function argument position
 

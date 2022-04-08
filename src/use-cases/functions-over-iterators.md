@@ -34,7 +34,7 @@ assert_eq!(sum(1..=3), 6);
 ### Variadic functions
 
 - [x] E: Homogenous variadic functions
-- [x] I: Variadic function arguments implement `IntoIterator`
+- [x] I: Homogenous variadic function arguments implement `IntoIterator`
 - [x] I: Heterogenous variadic functions
 - [ ] C: Flexible variadic function argument position
 

@@ -20,7 +20,7 @@ With sufficiently powerful variadic tuples, we can reduce both variadic function
 ### Variadic functions
 
 - [x] E: Homogenous variadic functions
-- [ ] I: Variadic function arguments implement `IntoIterator`
+- [ ] I: Homogenous variadic function arguments implement `IntoIterator`
 - [x] I: Heterogenous variadic functions
 - [ ] C: Flexible variadic function argument position
 

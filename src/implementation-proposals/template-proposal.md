@@ -19,6 +19,7 @@ In a single sentence, what does this proposal allow and how does it do so?
 - [ ] U: Argument packing and unpacking
 - [ ] U: Tuple manipulation
 - [ ] U: `HIterator` and `IntoHIterator` traits
+- [ ] U: Variadic tuple destructuring
 - [ ] C: Tuple type iteration
 
 ### Variadic generics

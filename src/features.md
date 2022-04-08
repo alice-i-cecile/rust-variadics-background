@@ -56,14 +56,19 @@ There are four levels of importance:
   - `(1, 2, 3).append((4, 5, 6))`
   - `(1, 2, 3).pop()`
   - `(1, 2, 3).len()`
-  - Provide more interesting manipulations of tuples
-  - These would be automatically implemented methods on the `Tuple` trait and typically return `impl Tuple`
-  - See [`frunk`'s methods on `HCons`](https://docs.rs/frunk/latest/frunk/hlist/struct.HCons.html) for more ideas
+  - provide more interesting manipulations of tuples
+  - may be a useful implementation building block, see [the ancient draft RFC](https://github.com/rust-lang/rfcs/issues/376) on variadics
+  - these would be automatically implemented methods on the `Tuple` trait and typically return `impl Tuple`
+  - see [`frunk`'s methods on `HCons`](https://docs.rs/frunk/latest/frunk/hlist/struct.HCons.html) for more ideas
 - U: **`HIterator` and `IntoHIterator` traits**
   - allows use of `pretty_print("A", 2, 4)` when the signature is `fn pretty_print(impl IntoHIterator<Item impl Add>)`
   - heterogenously typed equivalents of `Iterator` and `IntoIterator`
   - come with blanket impls for `Iterator` and `IntoIterator` types
   - useful when creating flexible, ergonomic APIs
+- U: **Variadic tuple destructuring**
+  - `let (head, ..tail) = (1, 2, "foo", "bar");`
+  - requires tuple manipulation
+  - allows users to unpack tuples into smaller tuples
 - C: **Tuple type iteration**
   - enables `for T in Types{...}` for variadic generics
   - useful for runtime type reflection

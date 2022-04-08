@@ -19,6 +19,7 @@ With sufficiently powerful variadic tuples, we can reduce both variadic function
 - [ ] U: Argument packing and unpacking
 - [ ] U: Tuple manipulation
 - [ ] U: `HIterator` and `IntoHIterator` traits
+- [ ] U: Variadic tuple destructuring
 - [ ] C: Tuple type iteration
 
 ### Variadic generics

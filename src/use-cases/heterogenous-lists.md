@@ -28,6 +28,7 @@ for item in hlist {
 - [ ] U: Argument packing and unpacking
 - [x] U: Tuple manipulation
 - [x] U: `HIterator` and `IntoHIterator` traits
+- [x] U: Variadic tuple destructuring
 - [x] C: Tuple type iteration
 
 ### Variadic generics

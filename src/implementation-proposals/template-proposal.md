@@ -67,3 +67,5 @@ Are there any helpful papers, blog posts, forum threads or other background read
 ### Questions to answer before an RFC
 
 ### Questions to answer during an RFC
+
+### Questions to answer during implementation

@@ -123,7 +123,9 @@ Because Bevy is able to access some approximation of variadic tuples (critically
 ### Questions to answer before an RFC
 
 - How, precisely, do we implement the required variadic tuples?
+- Is it important to syntactically distinguish between heterogenous tuples and homogenous tuples?
+- Is variadic function and/or variadic generic sugar worthwhile if it doesn't add any new functionality?
 
 ### Questions to answer during an RFC
 
-- What other important or useful features should be included?
+### Questions to answer during implementation

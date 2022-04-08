@@ -72,10 +72,11 @@ There are four levels of importance:
 - U: **`HomogenousTuple` and `UniqueTuple` traits**
   - both traits are subtraits of `Tuple`
   - `HomogenousTuple` guarantees that all item types are identical
-    - can be converted to and from arrays
+    - can be infallibly converted to and from arrays
+    - `IntoIterator` and `FromIterator` can be blanket implemented
   - `HeterogenousTuple` guarantees that all item types are unique
     - very valuable in ECS applications
-    - avoids repeated checks
+    - avoids repeated checks for uniqueness
 - C: **Tuple type iteration**
   - enables `for T in Types{...}` for variadic generics
   - useful for runtime type reflection

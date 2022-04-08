@@ -69,6 +69,13 @@ There are four levels of importance:
   - `let (head, ..tail) = (1, 2, "foo", "bar");`
   - requires tuple manipulation
   - allows users to unpack tuples into smaller tuples
+- U: **`HomogenousTuple` and `UniqueTuple` traits**
+  - both traits are subtraits of `Tuple`
+  - `HomogenousTuple` guarantees that all item types are identical
+    - can be converted to and from arrays
+  - `HeterogenousTuple` guarantees that all item types are unique
+    - very valuable in ECS applications
+    - avoids repeated checks
 - C: **Tuple type iteration**
   - enables `for T in Types{...}` for variadic generics
   - useful for runtime type reflection

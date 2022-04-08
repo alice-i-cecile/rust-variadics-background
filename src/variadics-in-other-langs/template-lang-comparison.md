@@ -20,6 +20,7 @@ Give a basic summary of the features covered by the language.
 - [ ] U: Tuple manipulation
 - [ ] U: `HIterator` and `IntoHIterator` traits
 - [ ] U: Variadic tuple destructuring
+- [ ] U: `HomogenousTuple` and `UniqueTuple` traits
 - [ ] C: Tuple type iteration
 
 ### Variadic generics

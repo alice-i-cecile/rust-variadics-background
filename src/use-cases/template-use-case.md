@@ -8,7 +8,7 @@ let example = demonstrates_functionality();
 assert!(example.is_concise());
 ```
 
-## Features needed
+## Features desired
 
 ### Variadic functions
 
@@ -26,6 +26,7 @@ assert!(example.is_concise());
 - [ ] U: Tuple manipulation
 - [ ] U: `HIterator` and `IntoHIterator` traits
 - [ ] U: Variadic tuple destructuring
+- [ ] U: `HomogenousTuple` and `UniqueTuple` traits
 - [ ] C: Tuple type iteration
 
 ### Variadic generics

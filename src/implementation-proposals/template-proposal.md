@@ -2,7 +2,7 @@
 
 In a single sentence, what does this proposal allow and how does it do so?
 
-## Areas covered
+## Features provided
 
 ### Variadic functions
 
@@ -20,6 +20,7 @@ In a single sentence, what does this proposal allow and how does it do so?
 - [ ] U: Tuple manipulation
 - [ ] U: `HIterator` and `IntoHIterator` traits
 - [ ] U: Variadic tuple destructuring
+- [ ] U: `HomogenousTuple` and `UniqueTuple` traits
 - [ ] C: Tuple type iteration
 
 ### Variadic generics

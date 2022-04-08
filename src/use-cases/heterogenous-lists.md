@@ -11,7 +11,7 @@ for item in hlist {
 }
 ```
 
-## Features needed
+## Features desired
 
 ### Variadic functions
 
@@ -29,6 +29,7 @@ for item in hlist {
 - [x] U: Tuple manipulation
 - [x] U: `HIterator` and `IntoHIterator` traits
 - [x] U: Variadic tuple destructuring
+- [x] U: `HomogenousTuple` and `UniqueTuple` traits
 - [x] C: Tuple type iteration
 
 ### Variadic generics

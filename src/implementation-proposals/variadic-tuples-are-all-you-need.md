@@ -2,7 +2,7 @@
 
 With sufficiently powerful variadic tuples, we can reduce both variadic functions and variadic generics to syntactic sugar.
 
-## Areas covered
+## Features provided
 
 ### Variadic functions
 
@@ -20,6 +20,7 @@ With sufficiently powerful variadic tuples, we can reduce both variadic function
 - [ ] U: Tuple manipulation
 - [ ] U: `HIterator` and `IntoHIterator` traits
 - [ ] U: Variadic tuple destructuring
+- [ ] U: `HomogenousTuple` and `UniqueTuple` traits
 - [ ] C: Tuple type iteration
 
 ### Variadic generics

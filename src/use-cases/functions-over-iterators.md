@@ -16,7 +16,7 @@ assert_eq!(sum((1, 2, 3)), 6);
 assert_eq!(sum(1..=3), 6);
 ```
 
-## Features needed
+## Features desired
 
 ### Variadic functions
 
@@ -34,6 +34,7 @@ assert_eq!(sum(1..=3), 6);
 - [ ] U: Tuple manipulation
 - [x] U: `HIterator` and `IntoHIterator` traits
 - [ ] U: Variadic tuple destructuring
+- [ ] U: `HomogenousTuple` and `UniqueTuple` traits
 - [ ] C: Tuple type iteration
 
 ### Variadic generics

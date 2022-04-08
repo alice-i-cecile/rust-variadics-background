@@ -40,7 +40,7 @@ What do users want to do?
 
 Are there any particularly challenging edge cases?
 Would users be willing to accept limitations that may make implementation simpler?
-How does this use case require the specific features outlined above?
+How does this use case require or benefit from the specific features outlined above?
 
 ## Workarounds
 

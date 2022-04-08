@@ -183,6 +183,7 @@ For those of us firmly rooted in practical applications of programming, here's a
 
 - **Arity:** the number of arguments taken by a function.
   - The arity of `hello_world()` is zero, the arity of `add(a, b)` is two and the type-arity of `HashMap<i32, String>` is two.
+- **Destructuring:** TODO
 - **Existential type:** a type that cannot be named, but we know some details about
   - `impl Add` is an existential type: we know that this type implements the `Add` trait, but nothing else about it
   - for an excellent discussion of the details of existential types, go read [Existential Types in Rust](https://varkor.github.io/blog/2018/07/03/existential-types-in-rust.html)
@@ -191,6 +192,7 @@ For those of us firmly rooted in practical applications of programming, here's a
 - **Homogeneously typed:** all of the items in a collection are the same type.
   - The opposite of this is **hetergonenously typed**.
   - Subtly, homogenously typed collections are generally considered to be a special case of heterogenously typed collections: there's no requirement that the types *must* be different, only that the *can* be.
+- **Monomorphization:** TODO
 - **Variadic:** something that can take a varying number of arguments.
   - In other words, the arity is not fixed.
 

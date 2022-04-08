@@ -2,127 +2,292 @@
 
 Based on the [use cases](use-cases/use-cases.md) examined, how can we split out and prioritize the features of variadics?
 
-This is purely a measure of *importance*, and should be weighed against difficulty (and path-dependent effects) when deciding how to proceed in practice.
-There are four levels of importance:
+At this stage, features are assessed on the basis of their utility:
 
 - **Essential \[E\]:** The *bare* minimum feature set for someone to truthfully say "Rust has variadic X now!".
 - **Important: \[I\]** Features that will actively frustrate users of variadics if they're missing.
 - **Useful \[U\]:** Features that everyone can agree would be nice to have, but that users can live without for now.
 - **Controversial \[C\]:** Features that could be cool, but may come with serious unavoidable drawbacks, encourage questionable patterns or be only tangentially related.
 
+Note that this is independent of the difficulty of actually implementing such a feature.
+Difficulty, utility and path-dependent effects (e.g. feature A can be implemented in terms of feature B) should be combined later, when deciding how to proceed.
+
+## Abbreviated feature list
+
+This feature list is used throughout this document, to enable consistent comparisons and at-a-glance understanding.
+
+Variadic tuples:
+
+- E: Tuple trait
+- E: Homogenous variadic tuples
+- E: Heterogenous variadic tuples
+- E: Tuple item trait bounds
+- E: Tuple value iteration
+- I: Tuple type manipulation
+- U: Variadic tuple destructuring
+  
+Variadic functions:
+
+- E: Homogenous variadic functions
+- E: Heterogenous variadic functions
+- U: Argument packing and unpacking
+- C: Homogenous variadic function arguments implement `IntoIterator`
+- C: Flexible variadic function argument position
+
+Variadic generics:
+
+- E: Minimum variadic generics
+- C: Flexible variadic generic argument position
+- C: Variadic generic type iteration
+
 ## Variadic tuples
 
-- E: **Tuple trait**
-  - `trait HList: Tuple`
-  - Create a `Tuple` trait that is implemented by all tuples
-  - This allows us to represent tuples of arbitary length existentially
-- E: **Tuple item trait bounds**
-  - `trait Bundle: Tuple<impl Component>`
-  - each type within of the tuple must implement the given trait(s)
-  - this is critically different than `trait Bundle: Tuple + Component`, which would mean that the tuple type itself must implement the `Component` trait
-- E: **Tuple value iteration**
-  - `(3, 3.14, "pie").values().map(|arg| println!("{arg:?}"));`
-  - Cannot use the `Iterator` or `IntoIterator` trait because tuples are heterogenously typed
-  - Use `HIterator` and `IntoHIterator` traits instead (if they exist)
-  - Essential for working with heterogenously typed lists
-  - Critical to some implementation strategies
-- I: **Explicit variadic tuples**
-  - `type HList = (..T)`
-  - variadic tuples can be explicitly named
-  - alternative syntax for `impl Tuple`
-- U: **Argument packing and unpacking**
-  - when provided a `my_fun(1,2,3)`, create a `(1,2,3)` tuple
-  - pass the tuple `(1, 2, 3)` into `fn sum(item: ..i32)`
-  - this is particularly useful for inspecting and modifying variadic arguments before passing them down call trees
-- U: **Tuple manipulation**
-  - `(1, 2, 3).append((4, 5, 6))`
-  - `(1, 2, 3).pop()`
-  - `(1, 2, 3).len()`
-  - provide more interesting manipulations of tuples
-  - may be a useful implementation building block, see [the ancient draft RFC](https://github.com/rust-lang/rfcs/issues/376) on variadics
-  - these would be automatically implemented methods on the `Tuple` trait and typically return `impl Tuple`
-  - see [`frunk`'s methods on `HCons`](https://docs.rs/frunk/latest/frunk/hlist/struct.HCons.html) for more ideas
-- U: **`HIterator` and `IntoHIterator` traits**
-  - allows use of `pretty_print("A", 2, 4)` when the signature is `fn pretty_print(impl IntoHIterator<Item impl Add>)`
-  - heterogenously typed equivalents of `Iterator` and `IntoIterator`
-  - come with blanket impls for `Iterator` and `IntoIterator` types
-  - useful when creating flexible, ergonomic APIs
-- U: **Variadic tuple destructuring**
-  - `let (head, ..tail) = (1, 2, "foo", "bar");`
-  - requires tuple manipulation
-  - allows users to unpack tuples into smaller tuples
-- U: **`HomogenousTuple` and `UniqueTuple` traits**
-  - both traits are subtraits of `Tuple`
-  - `HomogenousTuple` guarantees that all item types are identical
-    - can be infallibly converted to and from arrays
-    - `IntoIterator` and `FromIterator` can be blanket implemented
-  - `HeterogenousTuple` guarantees that all item types are unique
-    - very valuable in ECS applications
-    - avoids repeated checks for uniqueness
-- C: **Tuple type iteration**
-  - enables `for T in Types{...}` for variadic generics
-  - useful for runtime type reflection
-  - useful to verify the uniqueness of types
-  - types are not values in Rust, so this would involve a large degree of magic
+### Tuple trait
+
+**Utility:** Essential
+
+**Minimal example:** `trait HList: Tuple`
+
+A `Tuple` trait is implemented by all tuples.
+
+This allows us to represent tuples of arbitrary length existentially.
+Useful methods can be added to it later, see [tuple value iteration](features.md#tuple-value-iteration) and [tuple type manipulation](features.md#tuple-type-manipulation).
+
+The [`frunk` crate's methods on `HCons`](https://docs.rs/frunk/latest/frunk/hlist/struct.HCons.html) contain a nice collection of methods that may be nice to implement.
+
+### Homogenous variadic tuples
+
+**Utility:** Essential
+
+**Minimal example:** `(..i32)`
+
+Tuples of arbitrary length can be represented, but only if they store the same type.
+The last element of any tuple can be homogenous variadic: `(bool, bool, ..String)`.
+
+A `HomogenousTuple` subtrait of `Tuple` can be defined if we have a [tuple trait](features.md#tuple-trait).
+This trait would enable:
+
+- infallible conversions to and from arrays
+- blanket impls of `IntoIterator` and `FromIterator`
+
+### Heterogenous variadic tuples
+
+**Utility:** Essential
+
+**Minimal example:** `(..?T)`
+
+Tuples of arbitrary length can be represented, and they can store different item types.
+The last element of any tuple can be heterogenous variadic: `(bool, bool, ..?T)`.
+
+Requires [homogenous variadic tuples](features.md#homogenous-variadic-tuples).
+Much more useful with [tuple item trait bounds](features.md#tuple-item-trait-bounds).
+
+A `UniqueTuple` subtrait of `Tuple` can be defined if we have a [tuple trait](features.md#tuple-trait).
+The type of each element of a tuple with this trait is guaranteed to be unique.
+This is useful expressive functionality, especially for ECS applications, where this is a fundamental constraint in several places.
+
+### Tuple item trait bounds
+
+**Utility:** Essential
+
+**Minimal example:** `trait Bundle: Tuple<?Item: Component>`
+
+Each type contained within the tuple must implement the provided trait(s).
+
+Note that this is very different from `trait Bundle: Tuple + Component`, which means that every trait that implements the `Bundle` trait must implement `Component`.
+This cannot be represented as a standard associated type bound (`trait Bundle: Tuple<Item: Component>`), as associated types must represent exactly one type.
+
+This is essential to non-trivial use cases of variadic tuples.
+
+### Tuple value iteration
+
+**Utility:** Essential
+
+**Minimal example:** `for i in (1,2,3)`
+
+The values of arbitrary tuple types can be iterated over.
+
+This is trivial for tuples that are guaranteed to be homogenous, but requires new technology for heterogenous tuples.
+If we have a [tuple item trait bound](features.md#tuple-item-trait-bounds), we can treat the item type as a `dyn Trait`.
+For concrete tuples (e.g. `(3, 3.14, "pi")`), we could attempt to infer whether or not tuple item trait bounds are valid
+based on which trait methods are used.
+
+### Tuple type manipulation
+
+**Utility:** Important
+
+**Minimal example:** `(1,).append(2, 3) == (1, 2, 3)`
+
+Tuple types can be converted into other tuple types.
+The critical operations are:
+
+- push
+- pop
+- append
+- prepend
+
+This was explored in [RFC Draft #376](https://github.com/rust-lang/rfcs/issues/376), which proposed using it as a building block for an implementation.
+
+### Variadic tuple destructuring
+
+**Utility:** Useful
+
+**Minimal example:** `let (head, tail): (i32, (i32, i32, i32)) = (4, 3, 2, 1)`
+
+Allow tuples to be split via destructuring.
+
+Requires [tuple type manipulation](features.md#tuple-type-manipulation) to work, as we must be able to remove elements and construct new tuple types.
+
+This was explored in [RFC Draft #376](https://github.com/rust-lang/rfcs/issues/376).
 
 ## Variadic functions
 
-- E: **Homogenous variadic functions**
-  - `fn sum(item: ..i32)`
-  - any number of arguments can be provided to a function
-  - all of the arguments have the same type
-  - only one variadic argument
-  - the variadic argument comes last
-- I: **Homogenous variadic function arguments implement `IntoIterator`**
-  - allows use of `sum(1, 2, 3)` when the signature is `fn sum(impl IntoIterator<Item = impl Add>)`
-  - important to ensure APIs are flexible and elegant
-  - this should also be done for homogenous tuples
-- I: **Heterogenous variadic functions**
-  - `fn type_ids(args: ..impl Any)`
-  - the type of each argument in the variadic list of function arguments can differ
-  - requires variadic generics, as we must store the list of types
-  - completely useless without variadic generic trait bounds: we can't even use methods from `Any` due to its trait bounds
-- C: **Flexible variadic function argument position**
-  - `fn compound_homogenous_variadic_function(strings: ..String, ints: ..i32, flag: bool)`
-    - at compile time, we must be able to show that adjacent variadic function arguments are distinct
-  - `fn compound_generic_variadic_function<A, B>(a: ..A, b: ..B)`
-    - `A` can never be the same type as `B`
-  - `fn compound_heterogenous_variadic_function<?S: Sized, ?U: !Sized>(flag: bool, sized_args: ?T, unsized_args: ?U)`
-    - each provided argument must fit exactly one of the adjacent variadic generic types
-    - requires flexible variadic generic argument positions
-  - variadic function arguments can live in any position, improving ergonomics and expressivity
-  - enables the use of more than one variadic function argument per function
+### Homogenous variadic functions
+
+**Utility:** Essential
+
+**Minimal example:** `fn sum(items: ..i32) -> i32`
+
+Variadic function arguments can absorb any number of arguments, as long as they are the same type.
+
+This is the core feature of variadic functions, and introduces basic function overloading to Rust.
+It can be emulated with variadic tuples (e.g. `fn sum(items: (..i32)`), but this requires an extra set of parentheses.
+
+### Heterogenous variadic functions
+
+**Utility:** Essential
+
+**Minimal example:** `fn type_ids<?T: Any>(args: ..?T) -> Vec<TypeId>`
+
+Variadic function arguments can absorb any number of arguments whose type is not necessarily the same, each of which must obey any trait bounds of that type.
+
+This feature requires trait bounds to be useful, analogous to [tuple item trait bounds](features.md#tuple-item-trait-bounds).
+
+### Argument packing and unpacking
+
+**Utility:** Useful
+
+**Minimal example:**
+
+```rust
+fn outer_function(args: ..i32){
+    // Packing variadic arguments into a variadic tuple
+    let unpacked_args: (..i32) = args;
+    for mut arg in unpacked_args {
+        if arg < 0.1 {
+            arg = 0;
+        }
+    }
+    // Unpacking a variadic tuple into a variadic function argument 
+    inner_function(unpacked_args)
+}
+
+fn inner_function(args: ..impl Add) {}
+```
+
+Variadic function arguments can be extracted as a variadic tuple.
+Variadic tuples can be passed in place of a variadic function argument.
+
+This is most commonly used when passing variadic arguments down a function call stack, modifying or logging them as you go.
+This could also be supported in a more general form, to allow unpacking a tuple into multiple function arguments.
+
+Related to [variadic tuple destructuring](features.md#variadic-tuple-destructuring).
+
+Becomes more useful with [tuple type manipulation](features.md#tuple-type-manipulation), as it allows you to add and remove variadic arguments.
+
+### Homogenous variadic function arguments implement `IntoIterator`
+
+**Utility:** Controversial
+
+**Minimal example:**
+
+```rust
+fn sum<T: Add, I: IntoIterator<Item = T>>(summands: I) -> T{
+    summands.iter().reduce(|a, b| a + b)
+}
+
+let six = sum(1, 2, 3);
+```
+
+Implicitly allows the use of variadic function arguments in place of an `IntoIterator` type.
+
+This would allow library authors to support variadic function arguments without creating dedicated APIs.
+
+However, this syntactic sugar introduces implicit function overloading, and can be quite confusing.
+
+TODO: add a pathological example.
+
+Note that with variadic tuples and [tuple value iteration](features.md#tuple-value-iteration), end users can pass in a variadic tuple into an `impl IntoIterator` argument, acheiving all of the practical value of this feature at the cost of an additional set of parantheses.
+
+This feature would be more useful (and more confusing!) with [flexible variadic function argument positions](features.md#flexible-variadic-function-argument-position), as we could have several iterator function argument types.
+
+### Flexible variadic function argument position
+
+**Utility:** Controversial
+
+**Minimal example:** `fn compound_homogenous_variadic_function(strings: ..String, ints: ..i32, flag: bool)`
+
+Allow variadic function arguments in positions other than the last position, and allow more than one variadic function argument per type.
+
+Critically, the types of adjacent variadic function argument must be clearly distinguishable.
+This is simple in the non-generic homogenous case: they must be different types.
+If we add generics, we must restrict the set of possible monomorphizations, to forbid outcomes where the types are the same.
+
+This is extremely complex in the case of heterogenous variadic function arguments.
+See [flexible variadic generic argument position](features.md#c-flexible-variadic-generic-argument-position) for discussion.
 
 ## Variadic generics
 
-- E: **Unbounded variadic generics**
-  - `struct Union<..T>(PhantomData<..T>())`
-  - any number of type arguments can be used
-  - generics can be used in named structs, tuple structs, traits, type aliases and functions
-  - the variadic type argument comes last
-  - the type arguments do not have trait bounds
-- E: **Variadic generic trait bounds**
-  - `fn add_bundle<..T: Component>(component: T)`
-  - each type in the variadic generic list must implement the supplied trait(s)
-  - critical for more almost all use cases of variadic generics: you can't even use methods from `Any` without trait bounds
-- C: **Flexible variadic generic argument position**
-  - `struct Query<?Q: WorldQuery, ?F: WorldQuery + FilterFetch>`
-    - any type provided must be able to be seperated into exactly one of the adjacent variadic generics
-  - unbounded adjacent variadic generics are impossible
-    - consider `type AmbiguousTupleUnion<?A, ?B>`
-    - for any provided element, we have no way of knowing whether it belongs to `A` or `B`
-  - variadic generics can live in any position, improving ergonomics and expressivity
-  - enables the use of more than one variadic generic per type
-  - adjacent variadics must have a guarantee that the types cannot co-exist
-  - this feature becomes much more usable and useful with [negative impls](https://github.com/rust-lang/negative-impls-initiative)
-  - may need [negative trait bounds](https://github.com/rust-lang/rust/issues/42721) to be useful enough: `struct Query<?Q: WorldQuery + !FilterFetch, ?F: WorldQuery + FilterFetch>`
+### Minimum variadic generics
 
-## Impossible features
+**Utility:** Essential
 
-These features may seem appealing, but are fundamentally impossible within Rust.
+**Minimal example:** `struct Union<?T>(PhantomData<?T>)`
 
-- C: **Heterogenous `IntoIterator` and `Iterator` traits**
-  - allows use of `pretty_print("A", 2, 4)` when the signature is `fn pretty_print(impl IntoIterator<Item impl Add>)`
-  - would further increase API flexibility, with minimal changes to existing code bases
-  - impossible because existing APIs rely on the fact that the item type is always the same
-  - just create heterogenous iterator traits instead
+Variadic generic type parameters can absorb any number of type arguments.
+Trait bounds can be added, and apply to every type seperately:
+
+```rust
+// This stores a variadic tuple internally
+struct PrettyPrintable<?T: Display>((..?T));
+```
+
+The variadic argument must come last, unless [flexible variadic generic argument position](features.md#c-flexible-variadic-generic-argument-position) is implemented.
+
+### Flexible variadic generic argument position
+
+**Utility:** Controversial
+
+**Minimal example:**
+
+```rust
+struct SortedBySize<?S: Sized, ?U: !Sized>{
+    sized_tuple: (..?S),
+    unsized_tuple: (..?U),
+}
+```
+
+Allow variadic generic type parameters in positions other than the last position, and allow more than one variadic generic argument per type.
+
+### Variadic generic type iteration
+
+**Utility:** Controversial
+
+**Minimal example:**
+
+```rust
+fn assert_unique_types<?T: Any>(){
+   let set = HashSet::new();
+   for T in ?T {
+        let type_id = TypeId::of::<T>();
+        assert!(!set.contains(type_id));
+        set.insert(type_id);
+   }
+}
+```
+
+Variadic generic types can be iterated over within function bodies.
+
+This would open up a large range of possible applications.
+
+However, it would involve quite a bit of magic: types are not representable as values in Rust.

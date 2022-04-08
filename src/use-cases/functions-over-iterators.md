@@ -18,31 +18,29 @@ assert_eq!(sum(1..=3), 6);
 
 ## Features desired
 
-### Variadic tuples
+Variadic tuples:
 
 - [ ] E: Tuple trait
+- [x] E: Homogenous variadic tuples
+- [x] E: Heterogenous variadic tuples
 - [x] E: Tuple item trait bounds
 - [x] E: Tuple value iteration
-- [ ] I: Explicit variadic tuples
-- [ ] U: Argument packing and unpacking
-- [ ] U: Tuple manipulation
-- [x] U: `HIterator` and `IntoHIterator` traits
+- [ ] I: Tuple type manipulation
 - [ ] U: Variadic tuple destructuring
-- [ ] U: `HomogenousTuple` and `UniqueTuple` traits
-- [ ] C: Tuple type iteration
-
-### Variadic functions
+  
+Variadic functions:
 
 - [x] E: Homogenous variadic functions
-- [x] I: Homogenous variadic function arguments implement `IntoIterator`
-- [x] I: Heterogenous variadic functions
+- [x] E: Heterogenous variadic functions
+- [ ] U: Argument packing and unpacking
+- [x] C: Homogenous variadic function arguments implement `IntoIterator`
 - [ ] C: Flexible variadic function argument position
 
-### Variadic generics
+Variadic generics:
 
-- [ ] E: Unbounded variadic generics
-- [ ] E: Variadic generic trait bounds
+- [ ] E: Minimum variadic generics
 - [ ] C: Flexible variadic generic argument position
+- [ ] C: Variadic generic type iteration
 
 ## Detailed explanation
 

@@ -4,31 +4,29 @@ In a single sentence, what does this proposal allow and how does it do so?
 
 ## Features provided
 
-### Variadic tuples
+Variadic tuples:
 
 - [ ] E: Tuple trait
+- [ ] E: Homogenous variadic tuples
+- [ ] E: Heterogenous variadic tuples
 - [ ] E: Tuple item trait bounds
 - [ ] E: Tuple value iteration
-- [ ] I: Explicit variadic tuples
-- [ ] U: Argument packing and unpacking
-- [ ] U: Tuple manipulation
-- [ ] U: `HIterator` and `IntoHIterator` traits
+- [ ] I: Tuple type manipulation
 - [ ] U: Variadic tuple destructuring
-- [ ] U: `HomogenousTuple` and `UniqueTuple` traits
-- [ ] C: Tuple type iteration
-
-### Variadic functions
+  
+Variadic functions:
 
 - [ ] E: Homogenous variadic functions
-- [ ] I: Homogenous variadic function arguments implement `IntoIterator`
-- [ ] I: Heterogenous variadic functions
+- [ ] E: Heterogenous variadic functions
+- [ ] U: Argument packing and unpacking
+- [ ] C: Homogenous variadic function arguments implement `IntoIterator`
 - [ ] C: Flexible variadic function argument position
 
-### Variadic generics
+Variadic generics:
 
-- [ ] E: Unbounded variadic generics
-- [ ] E: Variadic generic trait bounds
+- [ ] E: Minimum variadic generics
 - [ ] C: Flexible variadic generic argument position
+- [ ] C: Variadic generic type iteration
 
 ## Detailed explanation
 

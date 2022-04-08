@@ -18,13 +18,13 @@ In a single sentence, what does this proposal allow and how does it do so?
 - [ ] I: Explicit variadic tuples
 - [ ] U: Argument packing and unpacking
 - [ ] U: Tuple manipulation
+- [ ] U: `HIterator` and `IntoHIterator` traits
+- [ ] C: Tuple type iteration
 
 ### Variadic generics
 
 - [ ] E: Unbounded variadic generics
 - [ ] E: Variadic generic trait bounds
-- [ ] E: Variadic generic type iteration
-- [ ] U: `HIterator` and `IntoHIterator` traits
 
 ## Detailed explanation
 
@@ -33,6 +33,10 @@ Explain the design in sufficient detail that:
 - Its interaction with other features is clear.
 - It is reasonably clear how the feature would be implemented.
 - Corner cases are dissected by example.
+
+## Strengths
+
+What unique benefits does this approach have?
 
 ## Drawbacks
 

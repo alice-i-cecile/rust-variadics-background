@@ -18,9 +18,10 @@ Give a basic summary of the features covered by the language.
 - [ ] I: Explicit variadic tuples
 - [ ] U: Argument packing and unpacking
 - [ ] U: Tuple manipulation
+- [ ] U: `HIterator` and `IntoHIterator` traits
+- [ ] C: Tuple type iteration
 
 ### Variadic generics
 
 - [ ] E: Unbounded variadic generics
 - [ ] E: Variadic generic trait bounds
-- [ ] E: Variadic generic type iteration

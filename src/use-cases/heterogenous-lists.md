@@ -28,12 +28,12 @@ for item in hlist {
 - [ ] U: Argument packing and unpacking
 - [x] U: Tuple manipulation
 - [x] U: `HIterator` and `IntoHIterator` traits
+- [x] C: Tuple type iteration
 
 ### Variadic generics
 
 - [ ] E: Unbounded variadic generics
 - [ ] E: Variadic generic trait bounds
-- [ ] E: Variadic generic type iteration
 
 ## Detailed explanation
 
@@ -175,3 +175,7 @@ impl <T: Display, U: Display> PrettyPrintable for (T, U) {}
 In practice, this requires a macro-generating macro and some *creative* use of the type system, but, as shown by [bevy's `all_tuples!` macro](https://github.com/bevyengine/bevy/blob/032b0f4bac9d9d7ea9820b774d4a9124ae46e33b/crates/bevy_ecs/macros/src/lib.rs#L49) it can be done.
 
 Unsurprisingly, all of the problems listed above are amplified when working with heterogenous fake-variadics.
+
+### `for` trait
+
+TODO: inspect how this is done in [`legion`](https://github.com/amethyst/legion/blob/093744ab559cc55edde8b45537793d08b7cd97cd/src/internals/systems/system.rs#L138)

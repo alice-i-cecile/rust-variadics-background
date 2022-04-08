@@ -25,12 +25,12 @@ assert!(example.is_concise());
 - [ ] U: Argument packing and unpacking
 - [ ] U: Tuple manipulation
 - [ ] U: `HIterator` and `IntoHIterator` traits
+- [ ] C: Tuple type iteration
 
 ### Variadic generics
 
 - [ ] E: Unbounded variadic generics
 - [ ] E: Variadic generic trait bounds
-- [ ] E: Variadic generic type iteration
 
 ## Detailed explanation
 

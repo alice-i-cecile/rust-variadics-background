@@ -9,4 +9,4 @@
 - [Variadics in other languages](variadics-in-other-langs/language-comparisons.md)
   - [Template](variadics-in-other-langs/template-lang-comparison.md)
 - [Implementation proposals](implementation-proposals/proposals.md)
-  - [Template](implementation-proposals/template-proposal.md)
+  - [Variadic tuples are all you need](implementation-proposals/variadic-tuples-are-all-you-need.md)

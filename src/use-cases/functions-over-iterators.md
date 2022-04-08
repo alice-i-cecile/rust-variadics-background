@@ -33,12 +33,12 @@ assert_eq!(sum(1..=3), 6);
 - [ ] U: Argument packing and unpacking
 - [ ] U: Tuple manipulation
 - [x] U: `HIterator` and `IntoHIterator` traits
+- [ ] C: Tuple type iteration
 
 ### Variadic generics
 
 - [ ] E: Unbounded variadic generics
 - [ ] E: Variadic generic trait bounds
-- [ ] E: Variadic generic type iteration
 
 ## Detailed explanation
 

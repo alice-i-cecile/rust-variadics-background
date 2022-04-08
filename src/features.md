@@ -64,6 +64,11 @@ There are four levels of importance:
   - heterogenously typed equivalents of `Iterator` and `IntoIterator`
   - come with blanket impls for `Iterator` and `IntoIterator` types
   - useful when creating flexible, ergonomic APIs
+- C: **Tuple type iteration**
+  - enables `for T in Types{...}` for variadic generics
+  - useful for runtime type reflection
+  - useful to verify the uniqueness of types
+  - types are not values in Rust, so this would involve a large degree of magic
 
 ## Variadic generics
 
@@ -77,9 +82,6 @@ There are four levels of importance:
   - `fn add_bundle<..T: Component>(component: T)`
   - each type in the variadic generic list must implement the supplied trait(s)
   - critical for more almost all use cases of variadic generics: you can't even use methods from `Any` without trait bounds
-- E: **Variadic generic type iteration**
-  - `for T in Types{...}`
-  - essential for practical uses of variadic generics
 
 ## Impossible features
 

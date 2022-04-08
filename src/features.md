@@ -117,6 +117,12 @@ The critical operations are:
 
 This was explored in [RFC Draft #376](https://github.com/rust-lang/rfcs/issues/376), which proposed using it as a building block for an implementation.
 
+The principal challenge here is memory layout:
+
+> In general, in current Rust, a tuple of the form (A, B, C) does not contain a tuple of the form (B, C) anywhere in its representation. This means if you have an (A, B, C) you can't take a reference to the "sub-tuple" (B, C) because it doesn't exist
+
+From [@canndrew](https://github.com/rust-lang/rfcs/issues/376#issuecomment-213692855).
+
 ### Homogenous variadic tuples
 
 **Utility:** Useful

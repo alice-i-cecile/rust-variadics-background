@@ -173,7 +173,8 @@ If variadics are so cool, why doesn't Rust already have them?
 2. It is not clear which [features](features.md) are essential for variadics in practice.
 3. We had not reached consensus on the ideal [syntax](syntax.md) for variadics.
 4. There are (terrible) workarounds for a lot of the critical [use cases](use-cases/use-cases.md).
-5. There are a lot of competing ideas for [how they could be implemented](implementation-proposals/proposals.md).
+5. There are competing ideas for [how they could be implemented](implementation-proposals/proposals.md).
+   1. 
 6. The way variadics are [implemented in other languages](variadics-in-other-langs/language-comparisons.md) sometimes leaves something to be desired.
 
 ## Glossary
@@ -193,8 +194,27 @@ For those of us firmly rooted in practical applications of programming, here's a
   - The opposite of this is **hetergonenously typed**.
   - Subtly, homogenously typed collections are generally considered to be a special case of heterogenously typed collections: there's no requirement that the types *must* be different, only that the *can* be.
 - **Monomorphization:** TODO
+- **Tuple type:** A type that defines an [ordered collection of values of different types](https://doc.rust-lang.org/rust-by-example/primitives/tuples.html) with a fixed length.
+- **Type list:** An ordered collection of types. While these could be thought of as a "tuple of types", [they are not the same thing as tuple types](https://github.com/rust-lang/rfcs/issues/376#issuecomment-215431992).
 - **Variadic:** something that can take a varying number of arguments.
   - In other words, the arity is not fixed.
+
+## History
+
+There is a long history of proposals for variadics (and related features) in Rust. On the RFC repo alone:
+
+- [#323 Wishlist: functions with keyword args, optional args, and/or variable-arity argument (varargs) lists](https://github.com/rust-lang/rfcs/issues/323)
+- [#376 - Draft RFC: variadic generics by @eddyb](https://github.com/rust-lang/rfcs/issues/376)
+- [#1587 - RFC for Variable Arity Functions by @zmoshansky](https://github.com/rust-lang/rfcs/pull/1587)
+- [#1921 - Conservative variadic functions by @sgrif](https://github.com/rust-lang/rfcs/pull/1921)
+- [#1935 - Tuple-Based Variadic Generics by @cramertj](https://github.com/rust-lang/rfcs/pull/1935)
+- [#2775 - Variadic tuples by @fredpointzero](https://github.com/rust-lang/rfcs/pull/2775)
+
+Externally:
+
+- [About variadics in Rust by @PoignardAzur](https://gist.github.com/PoignardAzur/aea33f28e2c58ffe1a93b8f8d3c58667)
+- [Variadic generics - pre-RFC by @memoryleak47](https://internals.rust-lang.org/t/variadic-generics-pre-rfc/8619)
+- [Variadic generics by @alexanderlinne](https://github.com/alexanderlinne/rfcs/blob/variadic_generics/text/0000-variadic-generics.md)
 
 ## Contributing
 

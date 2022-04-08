@@ -27,6 +27,7 @@ for item in hlist {
 - [ ] I: Explicit variadic tuples
 - [ ] U: Argument packing and unpacking
 - [x] U: Tuple manipulation
+- [x] U: `HIterator` and `IntoHIterator` traits
 
 ### Variadic generics
 
@@ -66,13 +67,13 @@ In a world with variadics, we could write this method as:
 ```rust
 impl World {
     // Using variadic tuples
-    fn insert_components(&mut self, entity: Entity, components: impl Tuple<Item impl Component>) {}
+    fn insert_components(&mut self, entity: Entity, components: impl Tuple<impl Component>) {}
 
     // Using variadic functions
     fn insert_components<C: Component>(&mut self, entity: Entity, components: ..*C>) {}
 
-    // Using heterogenous IntoIterator sugar
-    fn insert_components(&mut self, entity: Entity, components: impl IntoIterator<Item impl Component>>) {}
+    // Using heterogenous IntoHIterator sugar
+    fn insert_components(&mut self, entity: Entity, components: impl IntoHIterator<impl Component>>) {}
 }
 ```
 
@@ -157,7 +158,7 @@ impl <T: Add> Summable for (T, T) {
 Use a macro to implement this for some large range of tuple sizes, and voila: knock-off homogenous variadic tuples!
 This has some drawbacks though:
 
-- we cannot implement the `IntoIterator` trait directly, because of orphan rules
+- we cannot implement the `IntoIterator` trait directly (even for homogenous tuples), because of orphan rules
 - there is a *lot* of added complexity and boilerplate
 - confusing [doc spam](https://docs.rs/bevy/0.6/bevy/ecs/bundle/trait.Bundle.html#impl-Bundle-for-(C0%2C%20C1))
 - [terrible error messages](https://github.com/bevyengine/bevy/issues/1519)

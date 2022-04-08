@@ -24,7 +24,8 @@ In a single sentence, what does this proposal allow and how does it do so?
 - [ ] E: Unbounded variadic generics
 - [ ] E: Variadic generic trait bounds
 - [ ] E: Variadic generic type iteration
-  
+- [ ] U: `HIterator` and `IntoHIterator` traits
+
 ## Detailed explanation
 
 Explain the design in sufficient detail that:

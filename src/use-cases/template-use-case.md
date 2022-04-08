@@ -24,6 +24,7 @@ assert!(example.is_concise());
 - [ ] I: Explicit variadic tuples
 - [ ] U: Argument packing and unpacking
 - [ ] U: Tuple manipulation
+- [ ] U: `HIterator` and `IntoHIterator` traits
 
 ### Variadic generics
 

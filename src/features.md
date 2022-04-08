@@ -41,6 +41,7 @@ There are four levels of importance:
 - E: **Tuple value iteration**
   - `(3, 3.14, "pie").values().map(|arg| println!("{arg:?}"));`
   - Cannot use the `Iterator` or `IntoIterator` trait because tuples are heterogenously typed
+  - Use `HIterator` and `IntoHIterator` traits instead (if they exist)
   - Essential for working with heterogenously typed lists
   - Critical to some implementation strategies
 - I: **Explicit variadic tuples**
@@ -58,10 +59,11 @@ There are four levels of importance:
   - Provide more interesting manipulations of tuples
   - These would be automatically implemented methods on the `Tuple` trait and typically return `impl Tuple`
   - See [`frunk`'s methods on `HCons`](https://docs.rs/frunk/latest/frunk/hlist/struct.HCons.html) for more ideas
-- C: **Heterogenous `IntoIterator` and `Iterator` traits**
-  - allows use of `pretty_print("A", 2, 4)` when the signature is `fn pretty_print(impl IntoIterator<Item impl Add>)`
-  - further increases API flexibility and ergonomics
-  - would be a significant change to core traits
+- U: **`HIterator` and `IntoHIterator` traits**
+  - allows use of `pretty_print("A", 2, 4)` when the signature is `fn pretty_print(impl IntoHIterator<Item impl Add>)`
+  - heterogenously typed equivalents of `Iterator` and `IntoIterator`
+  - come with blanket impls for `Iterator` and `IntoIterator` types
+  - useful when creating flexible, ergonomic APIs
 
 ## Variadic generics
 
@@ -78,3 +80,12 @@ There are four levels of importance:
 - E: **Variadic generic type iteration**
   - `for T in Types{...}`
   - essential for practical uses of variadic generics
+
+## Impossible features
+
+These features may seem appealing, but are fundamentally impossible within Rust.
+
+- C: **Heterogenous `IntoIterator` and `Iterator` traits**
+  - allows use of `pretty_print("A", 2, 4)` when the signature is `fn pretty_print(impl IntoIterator<Item impl Add>)`
+  - further increases API flexibility and ergonomics
+  - impossible because existing APIs rely on the fact that the item type is always the same

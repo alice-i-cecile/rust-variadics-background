@@ -26,12 +26,13 @@ assert_eq!(sum(1..=3), 6);
 
 ### Variadic tuples
 
-- [x] E: Tuple trait
+- [ ] E: Tuple trait
 - [x] E: Tuple item trait bounds
 - [x] E: Tuple value iteration
 - [ ] I: Explicit variadic tuples
 - [ ] U: Argument packing and unpacking
 - [ ] U: Tuple manipulation
+- [x] U: `HIterator` and `IntoHIterator` traits
 
 ### Variadic generics
 
@@ -46,9 +47,10 @@ However, there are two ergonomic extensions to this pattern that would be nice t
 
 1. The users pass in a tuple.
    1. An iterator over the values would be constructable, requiring the **tuple value iteration** feature.
-   2. Each item in the tuple may have to implement some trait(s), requiring the **tuple trait** and  **tuple item trait bounds** feature.
+   2. If the tuple is homogenously typed, it implements the `IntoIterator` trait.
+   3. Each item in the tuple may have to implement some trait(s), requiring the **tuple item trait bounds** feature.
 2. The user passes in more than one argument.
-   1. Via the **Variadic function arguments impl `IntoIterator`** feature, these are implicitly converted into a variadic tuple.
+   1. Via the **`IntoHIterator`** feature, these are implicitly converted into a variadic tuple.
    2. This tuple is then converted into an iterator, as above.
 
 Within the broader use case, there's an important distinction between heterogenously and homogenously typed arguments.
@@ -81,11 +83,11 @@ let heterogenous_list: [Box<dyn Into<UserInput>>; 2] = [Box::new(KeyCode::LCtrl)
 input_map.insert_chord(heterogenous_list);
 ```
 
-If we had full variadic functions (including a **hetergonenous `IntoIterator` trait**):
+If we had full variadic functions (including a **`IntoHIterator` trait**):
 
 ```rust
 impl InputMap {
-    fn insert_chord(&mut self, input_iter: impl IntoIterator<Item=impl Into<UserInput>>, action: Action) {}
+    fn insert_chord(&mut self, input_iter: impl IntoHIterator<impl Into<UserInput>>, action: Action) {}
 }
 
 let input_map = InputMap::default();

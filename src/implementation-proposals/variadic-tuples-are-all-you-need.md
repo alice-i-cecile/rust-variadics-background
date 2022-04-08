@@ -73,7 +73,11 @@ These are collected into a concrete tuple or tuple type, with the compiler simpl
 ## Strengths
 
 1. Greatly simplified implementation: all of the complexity is restricted to variadic tuples.
-2. Clear staged roll-out: implement and stabilize variadic tuples first to deliver value quickly.
+2. Clear staged roll-out that delivers value incrementally:
+   1. An unstable `Tuple` trait can be macro-implemented for small tuples today, allowing immediate and distributed iteration without worrying about the more complex challenges.
+   2. Add tuple-item trait bounds.
+   3. Extend `Tuple` trait to arbitrary length tuples.
+   4. Add sugar and syntax for variadic functions and generics.
 3. Working compiler-external prototype.
 4. Variadic tuples in function arguments and type parameters allow the use of variadics in positions other than the last position.
 
@@ -84,11 +88,32 @@ These are collected into a concrete tuple or tuple type, with the compiler simpl
 
 ## Rationale
 
-TODO: fill in as questions arise.
+### Why can't we start with variadic functions or variadic generics?
+
+In order to make variadics work, we need both "values with unlimited arity" and "types with unlimited arity".
+Variadic functions have the former but not the latter, variadic generics have the latter but not the former.
+Variadic tuples have both.
+
+To expand on this, suppose we started with variadic functions.
+How would we represent the `Fn` type of a variadic `sum` function?
+We would begin with `Fn(i32) -> i32`, then `Fn(i32, i32) -> i32`.
+But because there's no representation of "types with unlimited arity", we have no way of describing the appropriate trait.
+
+### Why are "tuple item trait bounds" essential?
+
+In most serious use cases, we need shared trait bounds across all types within the tuple.
+This either allows us to ensure that they all meet some property required for effective storage,
+or allows us to perform a common operation on each item.
+
+Without a trait bound, we have no guarntee that such methods exist.
 
 ## Prior art
 
-This approach is directly inspired by the [`all_tuples!`](../use-cases/heterogenous-lists.md#alltuples-macro) strategy used in [`bevy`](https://github.com/bevyengine/bevy), which was in turn inherited from [`hecs`](https://github.com/Ralith/hecs), which was in turn inspired by [`legion](https://github.com/amethyst/legion).
+This flavor of design was favored by the [ancient draft RFC](https://github.com/rust-lang/rfcs/issues/376) by @eddyb.
+In it, they came to the same basic conclusion: if we have variadic tuples, we can build variadic functions and variadic generics.
+The rest of their proposal, to use a const-list approach to get to variadic tuples, deserves treatment in another draft proposal.
+
+The details of this approach is directly inspired by the [`all_tuples!`](../use-cases/heterogenous-lists.md#alltuples-macro) strategy used in [`bevy`](https://github.com/bevyengine/bevy), which was in turn inherited from [`hecs`](https://github.com/Ralith/hecs), which was in turn inspired by [`legion](https://github.com/amethyst/legion).
 
 Because Bevy is able to access some approximation of variadic tuples (critically, with trait bounds), it is able to approximate both variadic functions (e.g. [`insert_bundle`](https://docs.rs/bevy/0.6/bevy/ecs/system/struct.EntityCommands.html#method.insert_bundle)) as well as variadic generics (e.g [systems](https://github.com/bevyengine/bevy/blob/v0.6.1/examples/ecs/ecs_guide.rs) and [queries](https://docs.rs/bevy/0.6/bevy/ecs/system/struct.Query.html)).
 

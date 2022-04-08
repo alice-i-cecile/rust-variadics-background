@@ -18,12 +18,6 @@ assert_eq!(sum(1..=3), 6);
 
 ## Features desired
 
-### Variadic functions
-
-- [x] E: Homogenous variadic functions
-- [x] I: Variadic function arguments implement `IntoIterator`
-- [x] I: Heterogenous variadic functions
-
 ### Variadic tuples
 
 - [ ] E: Tuple trait
@@ -36,6 +30,12 @@ assert_eq!(sum(1..=3), 6);
 - [ ] U: Variadic tuple destructuring
 - [ ] U: `HomogenousTuple` and `UniqueTuple` traits
 - [ ] C: Tuple type iteration
+
+### Variadic functions
+
+- [x] E: Homogenous variadic functions
+- [x] I: Variadic function arguments implement `IntoIterator`
+- [x] I: Heterogenous variadic functions
 
 ### Variadic generics
 

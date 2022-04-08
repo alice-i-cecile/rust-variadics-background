@@ -10,12 +10,6 @@ assert!(example.is_concise());
 
 ## Features desired
 
-### Variadic functions
-
-- [ ] E: Homogenous variadic functions
-- [ ] I: Variadic function arguments implement `IntoIterator`
-- [ ] I: Heterogenous variadic functions
-
 ### Variadic tuples
 
 - [ ] E: Tuple trait
@@ -28,6 +22,12 @@ assert!(example.is_concise());
 - [ ] U: Variadic tuple destructuring
 - [ ] U: `HomogenousTuple` and `UniqueTuple` traits
 - [ ] C: Tuple type iteration
+
+### Variadic functions
+
+- [ ] E: Homogenous variadic functions
+- [ ] I: Variadic function arguments implement `IntoIterator`
+- [ ] I: Heterogenous variadic functions
 
 ### Variadic generics
 

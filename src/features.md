@@ -5,28 +5,10 @@ Based on the [use cases](use-cases/use-cases.md) examined, how can we split out 
 This is purely a measure of *importance*, and should be weighed against difficulty (and path-dependent effects) when deciding how to proceed in practice.
 There are four levels of importance:
 
-- **Essential \[E\]:** The *bare* minimum feature set for someone to truthfully say "Rust has variadics now!".
+- **Essential \[E\]:** The *bare* minimum feature set for someone to truthfully say "Rust has variadic X now!".
 - **Important: \[I\]** Features that will actively frustrate users of variadics if they're missing.
 - **Useful \[U\]:** Features that everyone can agree would be nice to have, but that users can live without for now.
 - **Controversial \[C\]:** Features that could be cool, but may come with serious unavoidable drawbacks, encourage questionable patterns or be only tangentially related.
-
-## Variadic functions
-
-- E: **Homogenous variadic functions**
-  - `fn sum(item: ..i32)`
-  - any number of arguments can be provided to a function
-  - all of the arguments have the same type
-  - only one variadic argument
-  - the variadic argument comes last
-- I: **Homogenous variadic function arguments implement `IntoIterator`**
-  - allows use of `sum(1, 2, 3)` when the signature is `fn sum(impl IntoIterator<Item = impl Add>)`
-  - important to ensure APIs are flexible and elegant
-  - this should also be done for homogenous tuples
-- I: **Heterogenous variadic functions**
-  - `fn type_ids(args: ..impl Any)`
-  - the type of each argument in the variadic list of function arguments can differ
-  - requires variadic generics, as we must store the list of types
-  - completely useless without variadic generic trait bounds: we can't even use methods from `Any` due to its trait bounds
 
 ## Variadic tuples
 
@@ -82,6 +64,24 @@ There are four levels of importance:
   - useful for runtime type reflection
   - useful to verify the uniqueness of types
   - types are not values in Rust, so this would involve a large degree of magic
+
+## Variadic functions
+
+- E: **Homogenous variadic functions**
+  - `fn sum(item: ..i32)`
+  - any number of arguments can be provided to a function
+  - all of the arguments have the same type
+  - only one variadic argument
+  - the variadic argument comes last
+- I: **Homogenous variadic function arguments implement `IntoIterator`**
+  - allows use of `sum(1, 2, 3)` when the signature is `fn sum(impl IntoIterator<Item = impl Add>)`
+  - important to ensure APIs are flexible and elegant
+  - this should also be done for homogenous tuples
+- I: **Heterogenous variadic functions**
+  - `fn type_ids(args: ..impl Any)`
+  - the type of each argument in the variadic list of function arguments can differ
+  - requires variadic generics, as we must store the list of types
+  - completely useless without variadic generic trait bounds: we can't even use methods from `Any` due to its trait bounds
 
 ## Variadic generics
 

@@ -4,12 +4,6 @@ With sufficiently powerful variadic tuples, we can reduce both variadic function
 
 ## Features provided
 
-### Variadic functions
-
-- [x] E: Homogenous variadic functions
-- [ ] I: Variadic function arguments implement `IntoIterator`
-- [x] I: Heterogenous variadic functions
-
 ### Variadic tuples
 
 - [ ] E: Tuple trait
@@ -22,6 +16,12 @@ With sufficiently powerful variadic tuples, we can reduce both variadic function
 - [ ] U: Variadic tuple destructuring
 - [ ] U: `HomogenousTuple` and `UniqueTuple` traits
 - [ ] C: Tuple type iteration
+
+### Variadic functions
+
+- [x] E: Homogenous variadic functions
+- [ ] I: Variadic function arguments implement `IntoIterator`
+- [x] I: Heterogenous variadic functions
 
 ### Variadic generics
 

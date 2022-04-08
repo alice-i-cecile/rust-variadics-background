@@ -9,6 +9,19 @@ In the context of Rust, we are interested in **variadic functions** (like a hypo
 
 Let's talk a little bit about how you might use each of those in practice.
 
+## Variadic tuples
+
+Tuples are great: simple, heterogenously typed collections of elements with a fixed length.
+But what if we wanted tuples of *arbitrary* length?
+
+Your first reaction might be "that's what vectors are for!".
+But in Rust, iterators must be **homogenously typed**: [we cannot have](https://beachape.com/blog/2016/10/23/rust-hlists-heterogenously-typed-list/) a vector that contains both `f32` and `i32`, even if all we want to do is print their values.
+
+To get around this, we might choose to use a `Vec<Box dyn Trait>` type, allowing us to store a **hetergonenously typed** collection of [trait objects](https://doc.rust-lang.org/book/ch17-02-trait-objects.html).
+But this indirection has a not-insignificant performance cost, forcing us to store our data on the heap, and requiring additional indirection.
+
+**Variadic tuples** are an attempt to have our cake and eat it too: allowing us to store heterogenous collections of arbitrary length, even if they're not [object-safe](https://rust-lang.github.io/rfcs/0255-object-safety.html), creating a [zero-cost abstraction](https://doc.rust-lang.org/beta/embedded-book/static-guarantees/zero-cost-abstractions.html).
+
 ## Variadic functions
 
 So, suppose we want to write a function that sums a list of integers. This is pretty easy right?
@@ -69,19 +82,6 @@ assert_eq!(sum(1,2,3), 6);
 
 If this world was particularly utopian, we could automatically convert lists of arguments into an unnamed type that implements `IntoIterator`,
 and our ✨elegant✨ code from above would Just Work when users try to pass it multiple arguments of the same type.
-
-## Variadic tuples
-
-Tuples are great: simple, heterogenously typed collections of elements with a fixed length.
-But what if we wanted tuples of *arbitrary* length?
-
-Your first reaction might be "that's what vectors are for!".
-But in Rust, iterators must be **homogenously typed**: [we cannot have](https://beachape.com/blog/2016/10/23/rust-hlists-heterogenously-typed-list/) a vector that contains both `f32` and `i32`, even if all we want to do is print their values.
-
-To get around this, we might choose to use a `Vec<Box dyn Trait>` type, allowing us to store a **hetergonenously typed** collection of [trait objects](https://doc.rust-lang.org/book/ch17-02-trait-objects.html).
-But this indirection has a not-insignificant performance cost, forcing us to store our data on the heap, and requiring additional indirection.
-
-**Variadic tuples** are an attempt to have our cake and eat it too: allowing us to store heterogenous collections of arbitrary length, even if they're not [object-safe](https://rust-lang.github.io/rfcs/0255-object-safety.html), creating a [zero-cost abstraction](https://doc.rust-lang.org/beta/embedded-book/static-guarantees/zero-cost-abstractions.html).
 
 ## Variadic generics
 
@@ -161,8 +161,8 @@ They're conceptually related, sure, but if we break up the work, can't we make t
 Ultimately, there are three reasons for this:
 
 1. Syntax should be intuitively consistent betweeen variadic functions, variadic tuples and variadic generics.
-2. Variadic functions, variadic generics and varidic tuples may rely on each other under the hood, depending on the [implementation strategy](implementation-proposals/proposals.md).
-3. Many [features](features.md) rely on the interplay between variadic functions, tuples and generics to reach their full potential.
+2. Variadic tuples, variadic functions and variadic generics may rely on each other under the hood, depending on the [implementation strategy](implementation-proposals/proposals.md). In particular, variadic functions and generics can both be emulated with variadic tuples.
+3. Some [features](features.md) rely on the interplay between variadic functions, tuples and generics to reach their full potential.
 
 ## Why don't we have variadics already?
 

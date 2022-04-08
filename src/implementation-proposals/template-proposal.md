@@ -4,12 +4,6 @@ In a single sentence, what does this proposal allow and how does it do so?
 
 ## Features provided
 
-### Variadic functions
-
-- [ ] E: Homogenous variadic functions
-- [ ] I: Variadic function arguments implement `IntoIterator`
-- [ ] I: Heterogenous variadic functions
-
 ### Variadic tuples
 
 - [ ] E: Tuple trait
@@ -22,6 +16,12 @@ In a single sentence, what does this proposal allow and how does it do so?
 - [ ] U: Variadic tuple destructuring
 - [ ] U: `HomogenousTuple` and `UniqueTuple` traits
 - [ ] C: Tuple type iteration
+
+### Variadic functions
+
+- [ ] E: Homogenous variadic functions
+- [ ] I: Variadic function arguments implement `IntoIterator`
+- [ ] I: Heterogenous variadic functions
 
 ### Variadic generics
 

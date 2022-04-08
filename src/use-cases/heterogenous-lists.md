@@ -13,12 +13,6 @@ for item in hlist {
 
 ## Features desired
 
-### Variadic functions
-
-- [ ] E: Homogenous variadic functions
-- [ ] I: Variadic function arguments implement `IntoIterator`
-- [ ] I: Heterogenous variadic functions
-
 ### Variadic tuples
 
 - [x] E: Tuple trait
@@ -31,6 +25,12 @@ for item in hlist {
 - [x] U: Variadic tuple destructuring
 - [x] U: `HomogenousTuple` and `UniqueTuple` traits
 - [x] C: Tuple type iteration
+
+### Variadic functions
+
+- [ ] E: Homogenous variadic functions
+- [ ] I: Variadic function arguments implement `IntoIterator`
+- [ ] I: Heterogenous variadic functions
 
 ### Variadic generics
 

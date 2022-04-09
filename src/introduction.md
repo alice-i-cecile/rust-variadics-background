@@ -214,6 +214,7 @@ Externally:
 - [About variadics in Rust by @PoignardAzur](https://gist.github.com/PoignardAzur/aea33f28e2c58ffe1a93b8f8d3c58667)
 - [Variadic generics - pre-RFC by @memoryleak47](https://internals.rust-lang.org/t/variadic-generics-pre-rfc/8619)
 - [Variadic generics by @alexanderlinne](https://github.com/alexanderlinne/rfcs/blob/variadic_generics/text/0000-variadic-generics.md)
+- [Variadic generics design notes](https://github.com/rust-lang/lang-team/blob/master/src/design_notes/variadic_generics_design.md)
 
 ## Contributing
 
